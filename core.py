@@ -85,3 +85,79 @@ a = [[1, 2, 3, 4, 5, 6],
 if __name__=="__main__":
   print(spiral(a, f_list=[]))
  
+
+"""method 2"""
+
+
+a = [
+    [1,2,3,4],
+    [5,6,7,8],
+    [9,10,11,12],
+    [13,14,15,16]
+]
+result = []
+def spiral(a, result):
+    if not a:
+        return result
+    top = True
+    right = False
+    bottom = False
+    left = False
+    start_row = 0
+    start_column = 0
+    end_row  =  len(a) - 1
+    end_column = len(a[0]) - 1
+    length = len(a)
+
+
+    if top:
+        first_row = a[0]
+        for each_col in range(len(first_row)):
+            if first_row[each_col]:
+                result.append(first_row[each_col])
+                index = first_row.index(first_row[each_col])
+                first_row[index] = False
+        
+        top = False
+        right = True
+
+    if right:
+        for each_row in range(len(a)):
+            if a[each_row][end_column]:
+                result.append(a[each_row][end_column])
+                a[each_row][end_column] = False
+
+        right = False
+        bottom = True
+
+    if bottom:
+        last_row = a[length-1]        
+        for each_col in range(len(last_row)):
+            if last_row[end_column - each_col]:
+                result.append(last_row[end_column - each_col])
+                last_row[end_column - each_col] = False
+        bottom = False
+        left = True
+        
+    if left:
+        for each_row in range(len(a)):
+            if a[end_row -each_row][start_column]:
+                result.append(a[end_row -each_row][start_column])
+                a[end_row -each_row][start_column] = False
+        left = False
+        top = True
+    print(result)
+    count = 0
+    for item in a:
+        if any(item) != False:
+            pass
+        else:
+            a.remove(item)
+            a = a
+            count +=1
+
+    if count:
+        spiral(a,result)
+    return result
+
+print(spiral(a, result))
